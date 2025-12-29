@@ -285,3 +285,71 @@ config:
 
 show-config:
 	$(PYTHON) config.py
+
+
+	
+# ========================================
+# FILE 2: Makefile
+# ========================================
+
+# LOCAL-MODEL Makefile
+# Quick commands for local development
+
+.PHONY: run gui api test clean logs help list-models debug
+.DEFAULT_GOAL := help
+
+PYTHON := python3
+PIP := pip3
+
+help:
+	@echo "LOCAL-MODEL - Available Commands:"
+	@echo ""
+	@echo "  make run              - Start with GUI (default)"
+	@echo "  make gui              - Start GUI application"
+	@echo "  make api              - Start API server only"
+	@echo "  make debug            - Run in debug mode"
+	@echo "  make list-models      - List available models"
+	@echo "  make test             - Run tests"
+	@echo "  make clean            - Clean cache files"
+	@echo "  make logs             - Watch log files (tail -f)"
+	@echo "  make install          - Install dependencies"
+	@echo "  make freeze           - Update requirements.txt"
+	@echo ""
+
+run: gui
+
+gui:
+	$(PYTHON) main.py
+
+api:
+	$(PYTHON) main.py --no-gui
+
+debug:
+	$(PYTHON) main.py --debug
+
+list-models:
+	$(PYTHON) main.py --list-models
+
+test:
+	$(PYTHON) -m pytest tests/ -v
+
+install:
+	$(PIP) install -r requirements.txt
+
+freeze:
+	$(PIP) freeze > requirements.txt
+
+clean:
+	find . -type f -name '*.pyc' -delete
+	find . -type d -name '__pycache__' -delete
+	find . -type d -name '*.egg-info' -exec rm -rf {} +
+	rm -rf .pytest_cache build dist
+
+logs:
+	tail -f logs/*.log
+
+config:
+	cat .env
+
+show-config:
+	$(PYTHON) config.py
