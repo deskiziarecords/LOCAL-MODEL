@@ -1,0 +1,9 @@
+{
+  "model_path": "path/to/your/model.gguf",
+  "embedding_model": "google/embeddinggemma-300m",
+  "n_ctx": 4096,
+  "temperature": 0.7,
+  "server_host": "127.0.0.1",
+  "server_port": 8000,
+  "api_key": "your-api-key"
+}
